@@ -10,11 +10,11 @@ public class QuizTest {
     @Test
     public void addTest(){
         quiz.clear();
-        quiz.add("Question1");
-        quiz.add("Question2");
-        quiz.add("Question3");
-        quiz.add("Question4");
-        quiz.add("Question5");
+        quiz.add("Title1", "Question1");
+        quiz.add("Title2", "Question2");
+        quiz.add("Title3", "Question3");
+        quiz.add("Title4", "Question4");
+        quiz.add("Title5", "Question5");
         quiz.delete(0);
         quiz.delete(1);
         quiz.delete(2);
@@ -23,9 +23,9 @@ public class QuizTest {
     }
 
     @Test
-    public void failAddTest(){
+    public void addTest1(){
         quiz.clear();
-        quiz.add("");
+        quiz.add("","");
         quiz.delete(0);
     }
     @Test
@@ -36,22 +36,22 @@ public class QuizTest {
     public void deleteUnexistingElements2(){
         Assert.assertFalse(quiz.delete(100));
     }
-    @Test //(expected = IndexOutOfBoundsException.class)
-    public void failAddTest2(){
+    @Test
+    public void addTest2(){
         quiz.clear();
-        quiz.add("Question1");
-        quiz.add("Question1");
-        quiz.add("Question1");
-        quiz.add("Question1");
+        quiz.add("Title1", "Question1");
+        quiz.add("Title2", "Question1");
+        quiz.add("Title3", "Question1");
+        quiz.add("Title4", "Question1");
         Assert.assertTrue(quiz.delete(0));
-        Assert.assertFalse(quiz.delete(0));
+        Assert.assertTrue(quiz.delete(0));
     }
 
     @Test
     public void equalsTest(){
-        Question question1 = new Question("question1");
-        Question question2 = new Question("question1");
-        Question question3 = new Question("question3");
+        Question question1 = new Question("Title1", "question1");
+        Question question2 = new Question("Title1", "question1");
+        Question question3 = new Question("Title3", "question3");
         Assert.assertTrue(question1.equals(question2));
         Assert.assertFalse(question1.equals(question3));
     }
@@ -60,11 +60,11 @@ public class QuizTest {
         quiz.clear();
         Assert.assertTrue(quiz.drawQuestionSet(4).size() == 0);
         Assert.assertTrue(quiz.drawQuestionSet(-1).size() == 0);
-        quiz.add("Question1");
-        quiz.add("Question2");
-        quiz.add("Question3");
-        quiz.add("Question4");
-        quiz.add("Question5");
+        quiz.add("Title1", "Question1");
+        quiz.add("Title2", "Question2");
+        quiz.add("Title3", "Question3");
+        quiz.add("Title4", "Question4");
+        quiz.add("Title5", "Question5");
         Assert.assertTrue(quiz.drawQuestionSet(5).size() == 5);
         Assert.assertTrue(quiz.drawQuestionSet(1).size() == 1);
         Assert.assertTrue(quiz.drawQuestionSet(2).size() == 2);

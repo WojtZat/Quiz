@@ -19,10 +19,10 @@ public class MemoryQuiz implements Quiz {
     }
 
     @Override
-    public boolean add(String q) {
-        if (q.isEmpty() || null == q)
+    public boolean add(String header, String text) {
+        if (header.isEmpty() || text.isEmpty())
             return false;
-        Question newQuestion = new Question(q);
+        Question newQuestion = new Question(header, text);
         if (!this.questionList.contains(newQuestion)) {
             questionList.add(newQuestion);
             numberOfQuestions++;
@@ -42,7 +42,7 @@ public class MemoryQuiz implements Quiz {
         }
     }
 
-    protected boolean canDraw(int number) {
+    private boolean canDraw(int number) {
         return number > 0 && this.questionList.size() >= number;
     }
 
@@ -55,9 +55,9 @@ public class MemoryQuiz implements Quiz {
         }
     }
 
-    protected ArrayList<Question> rollArray(int number) {
+    private ArrayList<Question> rollArray(int number) {
         ArrayList<Question> questionsArray = new ArrayList<>();
-        int[] values = new Random().ints(0, this.questionList.size() ).distinct().limit(number).toArray();
+        int[] values = new Random().ints(0, this.questionList.size()).distinct().limit(number).toArray();
         for (int a : values) {
             questionsArray.add(this.questionList.get(a));
         }

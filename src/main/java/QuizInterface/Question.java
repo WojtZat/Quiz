@@ -7,31 +7,38 @@ public class Question implements Serializable {
 
     String questionText;
 
-    public Question(String text){
+    String header;
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "questionText='" + questionText + '\'' +
+                ", header='" + header + '\'' +
+                '}';
+    }
+
+    public Question(String header, String text) {
+        this.header = header;
         questionText = text;
     }
-    public Question(){
+
+    public Question() {
 
     }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Question)) return false;
         Question question = (Question) o;
-        return Objects.equals(questionText, question.questionText);
+        return Objects.equals(questionText, question.questionText) &&
+                Objects.equals(header, question.header);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(questionText);
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "questionText='" + questionText + '\'' +
-                '}';
+        return Objects.hash(questionText, header);
     }
 }
