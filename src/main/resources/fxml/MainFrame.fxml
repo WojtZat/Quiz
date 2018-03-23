@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="300.0" prefWidth="500.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.121"
+          xmlns:fx="http://javafx.com/fxml/1">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="321.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="366.0" minWidth="10.0" prefWidth="355.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+    </rowConstraints>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+    <children>
+        <MenuButton mnemonicParsing="false" text="Menu" GridPane.columnSpan="2" GridPane.rowSpan="1">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Action 1"/>
+                <MenuItem mnemonicParsing="false" text="Action 2"/>
+            </items>
+        </MenuButton>
+        <TextArea prefHeight="346.0" prefWidth="110.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+                  GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </padding>
+        </TextArea>
+        <VBox prefHeight="239.0" prefWidth="110.0" GridPane.rowIndex="2">
+            <children>
+                <Button mnemonicParsing="false" text="Add Question">
+                    <VBox.margin>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                    </VBox.margin>
+                </Button>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Button mnemonicParsing="false" text="Roll Questions"/>
+                        <TextField prefHeight="25.0" prefWidth="35.0">
+                            <HBox.margin>
+                                <Insets left="3.0"/>
+                            </HBox.margin>
+                        </TextField>
+                    </children>
+                    <padding>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                    </padding>
+                </HBox>
+                <Button mnemonicParsing="false" text="Delete ">
+                    <VBox.margin>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                    </VBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" text="Question List">
+                    <VBox.margin>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                    </VBox.margin>
+                </Button>
+            </children>
+            <GridPane.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+            </GridPane.margin>
+            <padding>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+            </padding>
+        </VBox>
+        <ScrollBar orientation="VERTICAL" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    </children>
+</GridPane>
