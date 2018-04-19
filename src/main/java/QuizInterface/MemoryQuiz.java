@@ -1,21 +1,18 @@
 package QuizInterface;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MemoryQuiz implements Quiz {
 
-    private ArrayList<Question> questionList;
+    private ObservableList<Question> questionList;
 
-    private static int numberOfQuestions;
 
     public MemoryQuiz() {
-        this.questionList = new ArrayList<>();
-        numberOfQuestions = 0;
-    }
-
-    public static int getNumberOfQuestions() {
-        return numberOfQuestions;
+        this.questionList = FXCollections.observableArrayList();
     }
 
     @Override
@@ -25,7 +22,6 @@ public class MemoryQuiz implements Quiz {
         Question newQuestion = new Question(header, text);
         if (!this.questionList.contains(newQuestion)) {
             questionList.add(newQuestion);
-            numberOfQuestions++;
             return true;
         } else
             return false;
@@ -37,7 +33,6 @@ public class MemoryQuiz implements Quiz {
             return false;
         else {
             this.questionList.remove(number);
-            numberOfQuestions--;
             return true;
         }
     }
@@ -47,16 +42,16 @@ public class MemoryQuiz implements Quiz {
     }
 
     @Override
-    public ArrayList<Question> drawQuestionSet(int numberOfQuestions) {
+    public ObservableList<Question> drawQuestionSet(int numberOfQuestions) {
         if (!canDraw(numberOfQuestions)) {
-            return new ArrayList<>();
+            return FXCollections.observableArrayList();
         } else {
             return rollArray(numberOfQuestions);
         }
     }
 
-    private ArrayList<Question> rollArray(int number) {
-        ArrayList<Question> questionsArray = new ArrayList<>();
+    private ObservableList<Question> rollArray(int number) {
+        ObservableList<Question> questionsArray = FXCollections.observableArrayList();
         int[] values = new Random().ints(0, this.questionList.size()).distinct().limit(number).toArray();
         for (int a : values) {
             questionsArray.add(this.questionList.get(a));
@@ -68,4 +63,31 @@ public class MemoryQuiz implements Quiz {
     public void clear() {
         this.questionList.clear();
     }
+
+    @Override
+    // add tests
+    public boolean delete(Question q) {
+        if(!this.questionList.contains(q))
+            return false;
+        else{
+            this.questionList.remove(q);
+            return true;
+        }
+    }
+
+    public ObservableList<Question> getList() {
+        return questionList;
+    }
+
+    @Override
+    public boolean add(Question question) {
+        if (question.questionText.isEmpty() || question.questionTitle.isEmpty())
+            return false;
+        if (!this.questionList.contains(question)) {
+            questionList.add(question);
+            return true;
+        } else
+            return false;
+    }
+
 }

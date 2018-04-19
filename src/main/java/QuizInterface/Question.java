@@ -5,20 +5,21 @@ import java.util.Objects;
 
 public class Question implements Serializable {
 
+    public String getQuestionText() {
+        return questionText;
+    }
+
     String questionText;
 
-    String header;
+    String questionTitle;
 
     @Override
     public String toString() {
-        return "Question{" +
-                "questionText='" + questionText + '\'' +
-                ", header='" + header + '\'' +
-                '}';
+        return questionTitle;
     }
 
     public Question(String header, String text) {
-        this.header = header;
+        this.questionTitle = header;
         questionText = text;
     }
 
@@ -33,12 +34,12 @@ public class Question implements Serializable {
         if (!(o instanceof Question)) return false;
         Question question = (Question) o;
         return Objects.equals(questionText, question.questionText) &&
-                Objects.equals(header, question.header);
+                Objects.equals(questionTitle, question.questionTitle);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(questionText, header);
+        return Objects.hash(questionText, questionTitle);
     }
 }
