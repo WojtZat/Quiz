@@ -1,4 +1,4 @@
-package QuizGUI;
+package QuizController;
 
 public class Controller {
 }

@@ -1,4 +1,4 @@
-package QuizGUI;
+package QuizController;
 
 import QuizModel.MemoryQuiz;
 import javafx.fxml.FXML;

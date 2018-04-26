@@ -1,4 +1,4 @@
-package QuizGUI;
+package QuizController;
 
 import QuizModel.Question;
 import javafx.fxml.FXML;
