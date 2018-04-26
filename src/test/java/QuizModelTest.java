@@ -1,11 +1,13 @@
-import QuizInterface.MemoryQuiz;
-import QuizInterface.Question;
-import QuizInterface.Quiz;
+import QuizModel.MemoryQuiz;
+import QuizModel.Question;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class QuizTest {
-    Quiz quiz = new MemoryQuiz();
+public class QuizModelTest {
+
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+    MemoryQuiz quiz = context.getBean("memoryQuiz", MemoryQuiz.class);
 
     @Test
     public void addTest(){
@@ -74,6 +76,17 @@ public class QuizTest {
         quiz.delete(4);
         Assert.assertTrue(quiz.drawQuestionSet(3).size() == 3);
         Assert.assertTrue(quiz.drawQuestionSet(5).size() == 0);
+    }
+    @Test
+    public void singletonTest(){
+        System.out.println(quiz.getList().size());
+        quiz.add("Title1", "Question1");
+        quiz.add("Title2", "Question2");
+        quiz.add("Title3", "Question3");
+        quiz.add("Title4", "Question4");
+        quiz.add("Title5", "Question5");
+        MemoryQuiz quiz2 = context.getBean("memoryQuiz", MemoryQuiz.class);
+        Assert.assertTrue(quiz2.getList().size() == 5);
     }
 
 

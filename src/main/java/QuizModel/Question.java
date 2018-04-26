@@ -1,13 +1,10 @@
-package QuizInterface;
+package QuizModel;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Question implements Serializable {
 
-    public String getQuestionText() {
-        return questionText;
-    }
+public class Question implements Serializable {
 
     String questionText;
 
@@ -42,4 +39,9 @@ public class Question implements Serializable {
 
         return Objects.hash(questionText, questionTitle);
     }
+
+    public String getQuestionText() {
+        return questionText;
+    }
+
 }

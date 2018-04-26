@@ -1,15 +1,17 @@
-package QuizInterface;
+package QuizModel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Random;
 
+@Component
+@Scope("singleton")
 public class MemoryQuiz implements Quiz {
 
     private ObservableList<Question> questionList;
-
 
     public MemoryQuiz() {
         this.questionList = FXCollections.observableArrayList();

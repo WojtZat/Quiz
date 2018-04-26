@@ -10,7 +10,13 @@ import javafx.stage.StageStyle;
 public class Main extends Application {
 
     @Override
+    public void init() throws Exception {
+        super.init();
+    }
+
+    @Override
     public void start(Stage primaryStage) throws Exception {
+        System.out.println("start odpallone");
         primaryStage.initStyle(StageStyle.DECORATED);
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainFrame.fxml"));
         primaryStage.setTitle("Quiz");

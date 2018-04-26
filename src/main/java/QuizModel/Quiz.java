@@ -1,8 +1,6 @@
-package QuizInterface;
+package QuizModel;
 
 import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
 
 public interface Quiz {
     public boolean add(String header , String text);
