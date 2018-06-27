@@ -1,3 +1,4 @@
+import QuizModel.DbQuiz;
 import QuizModel.MemoryQuiz;
 import QuizModel.Question;
 import org.junit.Assert;
@@ -7,7 +8,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class QuizModelTest {
 
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
-    MemoryQuiz quiz = context.getBean("memoryQuiz", MemoryQuiz.class);
+    MemoryQuiz quiz2 = context.getBean("memoryQuiz", MemoryQuiz.class);
+    DbQuiz quiz = context.getBean("dbQuiz",DbQuiz.class );
+
 
     @Test
     public void addTest(){
@@ -37,16 +40,6 @@ public class QuizModelTest {
     @Test
     public void deleteUnexistingElements2(){
         Assert.assertFalse(quiz.delete(100));
-    }
-    @Test
-    public void addTest2(){
-        quiz.clear();
-        quiz.add("Title1", "Question1");
-        quiz.add("Title2", "Question1");
-        quiz.add("Title3", "Question1");
-        quiz.add("Title4", "Question1");
-        Assert.assertTrue(quiz.delete(0));
-        Assert.assertTrue(quiz.delete(0));
     }
 
     @Test
@@ -79,14 +72,45 @@ public class QuizModelTest {
     }
     @Test
     public void singletonTest(){
-        System.out.println(quiz.getList().size());
+        quiz.clear();
         quiz.add("Title1", "Question1");
         quiz.add("Title2", "Question2");
         quiz.add("Title3", "Question3");
         quiz.add("Title4", "Question4");
         quiz.add("Title5", "Question5");
-        MemoryQuiz quiz2 = context.getBean("memoryQuiz", MemoryQuiz.class);
-        Assert.assertTrue(quiz2.getList().size() == 5);
+        if(quiz.getClass().equals(DbQuiz.class)){
+            DbQuiz quiz2 = context.getBean("dbQuiz", DbQuiz.class);
+            Assert.assertTrue(quiz2.getList().size() == 5);
+        }
+        if(quiz.getClass().equals(MemoryQuiz.class)) {
+            MemoryQuiz quiz2 = context.getBean("memoryQuiz", MemoryQuiz.class);
+            Assert.assertTrue(quiz2.getList().size() == 5);
+        }
+        quiz.clear();
+    }
+
+    @Test
+    public void editTest(){
+        quiz.clear();
+        Question q = new Question("Title1", "Question1");
+        quiz.add(q);
+        Question editedQ = new Question("EditedTitle1", "EditedQuestion2");
+        editedQ.setAnswer("editedAnswer!");
+        System.out.printf(q.getQuestionText()+"\n");
+        System.out.printf(editedQ.getQuestionText()+"\n");
+        System.out.println("----------------");
+        Question e = null;
+        quiz.editQuestion(q,editedQ );
+        if(quiz.getClass().equals(MemoryQuiz.class)){
+            int i = quiz.getList().indexOf(q);
+            e = quiz.getList().get(i);
+        }
+        if(quiz.getClass().equals(DbQuiz.class)){
+            e = quiz.getList().get(0);
+        }
+        for(Question a : quiz.getList())
+            System.out.println(a.getQuestionText()+ " " + a.getQuestionTitle() + " " + a.getAnswer() + "\n");
+        Assert.assertTrue(e.getQuestionText().equals(editedQ.getQuestionText()));
     }
 
 

@@ -10,4 +10,5 @@ public interface Quiz {
     public boolean delete(Question q);
     public ObservableList<Question> getList();
     public boolean add(Question question);
+    public void editQuestion(Question oldQuestion, Question editedQuestion);
 }

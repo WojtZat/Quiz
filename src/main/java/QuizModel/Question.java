@@ -1,27 +1,58 @@
 package QuizModel;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Entity(name = "question_table")
 public class Question implements Serializable {
 
-    String questionText;
+    public int getId() {
+        return id;
+    }
 
-    String questionTitle;
+    @Id
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @GeneratedValue(generator = "generator")
+    @Column(name = "id", unique = true, nullable = false)
+    private int id;
 
-    @Override
-    public String toString() {
+    public Question(String questionTitle, String questionText) {
+        this.questionTitle = questionTitle;
+        this.questionText = questionText;
+        this.answer = "";
+    }
+
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    @Column(name = "title", nullable = false, unique = true)
+
+    private String questionTitle;
+
+    @Column(name = "text", nullable = false)
+    private String questionText;
+
+    @Column(name = "answer", nullable = false)
+    private String answer;
+
+    public String getQuestionTitle() {
         return questionTitle;
     }
 
-    public Question(String header, String text) {
-        this.questionTitle = header;
-        questionText = text;
-    }
-
-    public Question() {
-
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle = questionTitle;
     }
 
 
@@ -30,14 +61,24 @@ public class Question implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Question)) return false;
         Question question = (Question) o;
-        return Objects.equals(questionText, question.questionText) &&
-                Objects.equals(questionTitle, question.questionTitle);
+        return id == question.id &&
+                Objects.equals(questionTitle, question.questionTitle) &&
+                Objects.equals(questionText, question.questionText) &&
+                Objects.equals(answer, question.answer);
+    }
+
+    @Override
+    public String toString() {
+        return questionTitle;
     }
 
     @Override
     public int hashCode() {
+        return Objects.hash(id, questionTitle, questionText, answer);
+    }
 
-        return Objects.hash(questionText, questionTitle);
+    public Question() {
+
     }
 
     public String getQuestionText() {

@@ -83,13 +83,23 @@ public class MemoryQuiz implements Quiz {
 
     @Override
     public boolean add(Question question) {
-        if (question.questionText.isEmpty() || question.questionTitle.isEmpty())
+        if (question.getQuestionText().isEmpty() || question.getQuestionTitle().isEmpty())
             return false;
         if (!this.questionList.contains(question)) {
             questionList.add(question);
             return true;
         } else
             return false;
+    }
+
+    @Override
+    public void editQuestion(Question oldQuestion, Question editedQuestion) {
+        int index = this.questionList.indexOf(oldQuestion);
+        Question tempQuestion = this.questionList.get(index);
+        tempQuestion.setQuestionTitle(editedQuestion.getQuestionTitle());
+        tempQuestion.setQuestionText(editedQuestion.getQuestionText());
+        tempQuestion.setAnswer(editedQuestion.getAnswer());
+
     }
 
 }

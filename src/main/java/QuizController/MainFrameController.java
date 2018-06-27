@@ -1,32 +1,38 @@
 package QuizController;
 
-import QuizModel.MemoryQuiz;
+import Program.Main;
+import Program.StageManager;
 import QuizModel.Question;
+import QuizModel.Quiz;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainFrameController implements Initializable {
-    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
-    MemoryQuiz quiz;
 
+    private Quiz quiz;
+    private ValidationSupport validation;
+    private StageManager manager;
 
-    @FXML
-    private GridPane MainFrame;
     @FXML
     private ListView<Question> listView;
     @FXML
@@ -35,52 +41,26 @@ public class MainFrameController implements Initializable {
     private Button mainFrameRollButton;
     @FXML
     private TextArea mainViewTextArea;
+    @FXML
+    private Label numberLabel;
+    @FXML
+    private TextArea answerTextArea;
+    @FXML
+    private TitledPane answerAccordion;
 
-    ValidationSupport validation;
+    public static IntegerProperty numberValue;
 
-    public MainFrameController() {
-        quiz = context.getBean("memoryQuiz", MemoryQuiz.class);
+    public MainFrameController(Quiz quiz, StageManager stageManager) {
+        this.manager = stageManager;
+        this.quiz = quiz;
         validation = new ValidationSupport();
-        System.out.println(quiz.getList().size());
+        numberValue = new SimpleIntegerProperty(quiz.getList().size());
+        System.out.println(numberValue.toString());
     }
 
     @FXML
-    public void showAddFrameDialog() {
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.initOwner(MainFrame.getScene().getWindow());
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/AddFrame.fxml"));
-        try {
-            dialog.getDialogPane().setContent(fxmlLoader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-        ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.APPLY);
-        dialog.getDialogPane().getButtonTypes().add(addButtonType);
-        Node addButton = dialog.getDialogPane().lookupButton(addButtonType);
-        AddFrameController controller = fxmlLoader.getController();
-        Optional<ButtonType> result = dialog.showAndWait();
-        if (result.get() == addButtonType) {
-            System.out.println("Asdasdasdasdsad");
-            controller.addFrameAddQuestion();
-        } else if (result.get() == ButtonType.CANCEL) {
-            System.out.println("Cancel pressed");
-        }
-    }
-
-    @FXML
-    public void showListFrameDialog() {
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.initOwner(MainFrame.getScene().getWindow());
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/ListFrame.fxml"));
-            dialog.getDialogPane().setContent(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-        dialog.showAndWait();
+    public void switchToListScene() {
+        manager.switchScene("/fxml/ListFrame.fxml", "ListView");
     }
 
     @FXML
@@ -92,24 +72,40 @@ public class MainFrameController implements Initializable {
             alert.show();
         } else {
             listView.setItems(quiz.drawQuestionSet(Integer.parseInt(rollNumberText.getText())));
-            System.out.println(quiz.getList().size());
         }
     }
 
     @FXML
-    public void hadleListClickView() {
-        Question question = listView.getSelectionModel().getSelectedItem();
-        mainViewTextArea.setText(question.getQuestionText());
+    public void handleListClickView() {
+        if (!listView.getItems().isEmpty()) {
+            Question question = listView.getSelectionModel().getSelectedItem();
+            mainViewTextArea.setText(question.getQuestionText());
+            answerAccordion.setDisable(false);
+            answerTextArea.setText(question.getAnswer());
+            if (listView.getSelectionModel().getSelectedItem().getAnswer().isEmpty() ||
+                    listView.getSelectionModel().getSelectedItem().getAnswer().equals("")){
+                answerAccordion.setDisable(true);
+            }
+        }
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        quiz.add("Title1", "Question1" + '\n' + "-asd");
-        quiz.add("Title2", "Question2");
-        quiz.add("Title3", "Question3");
-        quiz.add("Title4", "Question4");
-        quiz.add("Title5", "Question5");
+        if (numberValue != null)
+            numberLabel.textProperty().bind(numberValue.asString());
+        else
+            numberLabel.setText("0");
+        rollNumberText.disableProperty().bind(
+                Bindings.equal(0, numberValue)
+        );
+        if (quiz.getList().isEmpty()) {
+            mainViewTextArea.setText("Your list is empty!\nAdd new questions to enable quiz.");
+        } else if (!quiz.getList().isEmpty()) {
+            final Tooltip tooltip = new Tooltip();
+            tooltip.setText("Pick number of question");
+            rollNumberText.setTooltip(tooltip);
+        }
+
         rollNumberText.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d{0,4}")) {
                 rollNumberText.setText(oldValue);
@@ -120,24 +116,7 @@ public class MainFrameController implements Initializable {
         mainFrameRollButton.disableProperty().bind(
                 Bindings.isEmpty(rollNumberText.textProperty())
         );
-
     }
 
-    public boolean deleteQuestion(Question question) {
-        return this.quiz.delete(question);
-    }
 
-    public ObservableList<Question> getList() {
-        return this.quiz.getList();
-    }
-
-    public void clearList() {
-        System.out.println(quiz.getList().size());
-        quiz.clear();
-        System.out.println(quiz.getList().size());
-    }
-
-    public void addQuestion(String title, String text) {
-        quiz.add(title, text);
-    }
 }
