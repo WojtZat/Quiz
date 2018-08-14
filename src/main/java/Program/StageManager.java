@@ -7,7 +7,6 @@ import QuizController.MainFrameController;
 import QuizModel.Question;
 import QuizModel.Quiz;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

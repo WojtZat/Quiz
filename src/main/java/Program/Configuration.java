@@ -1,8 +1,6 @@
 package Program;
 
-import QuizController.MainFrameController;
 import QuizModel.DbQuiz;
-import QuizModel.MemoryQuiz;
 import QuizModel.Quiz;
 import javafx.stage.Stage;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

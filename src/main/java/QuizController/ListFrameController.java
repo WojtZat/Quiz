@@ -93,9 +93,5 @@ public class ListFrameController implements Initializable {
         alert.setTitle(title);
         return alert;
     }
-
-    private Question getSelectedQuestion(){
-        return listFrameView.getSelectionModel().getSelectedItem();
-    }
-
+    
 }

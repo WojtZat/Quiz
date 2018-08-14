@@ -1,18 +1,12 @@
 package QuizController;
 
-import Program.StageManager;
 import QuizModel.Question;
 import QuizModel.Quiz;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
-import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
