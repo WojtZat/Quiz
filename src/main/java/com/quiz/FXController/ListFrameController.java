@@ -1,9 +1,9 @@
-package QuizController;
+package com.quiz.FXController;
 
-import Program.StageManager;
-import QuizModel.DbQuiz;
-import QuizModel.Question;
-import QuizModel.Quiz;
+import com.quiz.program.StageManager;
+import com.quiz.DAO.DatabaseImpl;
+import com.quiz.entity.Question;
+import com.quiz.DAO.Quiz;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -30,7 +30,7 @@ public class ListFrameController implements Initializable {
             Optional<ButtonType> result = deleteAlert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 if (quiz.delete(listFrameView.getSelectionModel().getSelectedItem())) {
-                    if(quiz.getClass() == DbQuiz.class)
+                    if(quiz.getClass() == DatabaseImpl.class)
                         listFrameView.setItems(quiz.getList());
                     MainFrameController.numberValue.set(quiz.getList().size());
                     listFrameView.refresh();

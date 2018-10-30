@@ -1,11 +1,11 @@
-package Program;
+package com.quiz.program;
 
-import QuizController.AddFrameController;
-import QuizController.EditFrameController;
-import QuizController.ListFrameController;
-import QuizController.MainFrameController;
-import QuizModel.Question;
-import QuizModel.Quiz;
+import com.quiz.FXController.AddFrameController;
+import com.quiz.FXController.EditFrameController;
+import com.quiz.FXController.ListFrameController;
+import com.quiz.FXController.MainFrameController;
+import com.quiz.entity.Question;
+import com.quiz.DAO.Quiz;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

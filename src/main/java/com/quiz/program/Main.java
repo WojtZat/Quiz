@@ -1,6 +1,6 @@
-package Program;
+package com.quiz.program;
 
-import QuizModel.DbQuiz;
+import com.quiz.DAO.DatabaseImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -20,7 +20,7 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         super.stop();
-        DbQuiz.close();
+        DatabaseImpl.close();
     }
 
 

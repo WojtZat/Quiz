@@ -1,7 +1,7 @@
-package QuizController;
+package com.quiz.FXController;
 
-import QuizModel.Question;
-import QuizModel.Quiz;
+import com.quiz.entity.Question;
+import com.quiz.DAO.Quiz;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;

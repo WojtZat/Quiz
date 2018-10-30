@@ -1,5 +1,6 @@
-package QuizModel;
+package com.quiz.DAO;
 
+import com.quiz.entity.Question;
 import javafx.collections.ObservableList;
 
 public interface Quiz {

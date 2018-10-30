@@ -1,8 +1,8 @@
-package QuizController;
+package com.quiz.FXController;
 
-import Program.StageManager;
-import QuizModel.Question;
-import QuizModel.Quiz;
+import com.quiz.program.StageManager;
+import com.quiz.entity.Question;
+import com.quiz.DAO.Quiz;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

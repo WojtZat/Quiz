@@ -1,6 +1,7 @@
-package QuizModel;
+package com.quiz.DAO;
 
 
+import com.quiz.entity.Question;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.hibernate.Session;
@@ -13,11 +14,11 @@ import java.util.Random;
 
 @Component
 @Scope("singleton")
-public class DbQuiz implements Quiz {
+public class DatabaseImpl implements Quiz {
 
     private static SessionFactory factory;
 
-    public DbQuiz() {
+    public DatabaseImpl() {
         factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Question.class).buildSessionFactory();
     }
 

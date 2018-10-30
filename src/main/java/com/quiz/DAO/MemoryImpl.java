@@ -1,5 +1,6 @@
-package QuizModel;
+package com.quiz.DAO;
 
+import com.quiz.entity.Question;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.context.annotation.Scope;
@@ -9,11 +10,11 @@ import java.util.Random;
 
 @Component
 @Scope("singleton")
-public class MemoryQuiz implements Quiz {
+public class MemoryImpl implements Quiz {
 
     private ObservableList<Question> questionList;
 
-    public MemoryQuiz() {
+    public MemoryImpl() {
         this.questionList = FXCollections.observableArrayList();
     }
 

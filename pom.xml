@@ -26,7 +26,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Program.Main</mainClass>
+                            <mainClass>com.quiz.program.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

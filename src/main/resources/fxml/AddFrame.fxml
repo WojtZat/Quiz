@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="270.0" prefWidth="152.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuizController.AddFrameController">
+<VBox prefHeight="270.0" prefWidth="152.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quiz.FXController.AddFrameController">
    <children>
       <GridPane fx:id="AddFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="214.0" VBox.vgrow="ALWAYS">
           <columnConstraints>

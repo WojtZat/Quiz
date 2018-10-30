@@ -1,7 +1,7 @@
-package Program;
+package com.quiz.program;
 
-import QuizModel.DbQuiz;
-import QuizModel.Quiz;
+import com.quiz.DAO.DatabaseImpl;
+import com.quiz.DAO.Quiz;
 import javafx.stage.Stage;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,8 +14,8 @@ public class Configuration {
 
     public Configuration(Stage primarystage){
         context = new ClassPathXmlApplicationContext("appContext.xml");
-//        quiz = context.getBean("memoryQuiz", MemoryQuiz.class);
-        quiz = context.getBean("dbQuiz",DbQuiz.class );
+//        quiz = context.getBean("memoryImpl", MemoryImpl.class);
+        quiz = context.getBean("databaseImpl", DatabaseImpl.class );
         stageManager = new StageManager(primarystage , quiz);
 
     }

@@ -1,6 +1,6 @@
-import QuizModel.DbQuiz;
-import QuizModel.MemoryQuiz;
-import QuizModel.Question;
+import com.quiz.DAO.DatabaseImpl;
+import com.quiz.DAO.MemoryImpl;
+import com.quiz.entity.Question;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -8,8 +8,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class QuizModelTest {
 
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
-    MemoryQuiz quiz2 = context.getBean("memoryQuiz", MemoryQuiz.class);
-    DbQuiz quiz = context.getBean("dbQuiz",DbQuiz.class );
+    MemoryImpl quiz = context.getBean("memoryImpl", MemoryImpl.class);
+    DatabaseImpl quiz2 = context.getBean("databaseImpl", DatabaseImpl.class );
 
 
     @Test
@@ -78,12 +78,12 @@ public class QuizModelTest {
         quiz.add("Title3", "Question3");
         quiz.add("Title4", "Question4");
         quiz.add("Title5", "Question5");
-        if(quiz.getClass().equals(DbQuiz.class)){
-            DbQuiz quiz2 = context.getBean("dbQuiz", DbQuiz.class);
+        if(quiz.getClass().equals(DatabaseImpl.class)){
+            DatabaseImpl quiz2 = context.getBean("databaseImpl", DatabaseImpl.class);
             Assert.assertTrue(quiz2.getList().size() == 5);
         }
-        if(quiz.getClass().equals(MemoryQuiz.class)) {
-            MemoryQuiz quiz2 = context.getBean("memoryQuiz", MemoryQuiz.class);
+        if(quiz.getClass().equals(MemoryImpl.class)) {
+            MemoryImpl quiz2 = context.getBean("memoryImpl", MemoryImpl.class);
             Assert.assertTrue(quiz2.getList().size() == 5);
         }
         quiz.clear();
@@ -101,11 +101,11 @@ public class QuizModelTest {
         System.out.println("----------------");
         Question e = null;
         quiz.editQuestion(q,editedQ );
-        if(quiz.getClass().equals(MemoryQuiz.class)){
+        if(quiz.getClass().equals(MemoryImpl.class)){
             int i = quiz.getList().indexOf(q);
             e = quiz.getList().get(i);
         }
-        if(quiz.getClass().equals(DbQuiz.class)){
+        if(quiz.getClass().equals(DatabaseImpl.class)){
             e = quiz.getList().get(0);
         }
         for(Question a : quiz.getList())

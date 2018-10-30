@@ -1,4 +1,4 @@
-package QuizModel;
+package com.quiz.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
