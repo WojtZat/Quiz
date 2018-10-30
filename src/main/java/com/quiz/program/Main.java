@@ -1,6 +1,7 @@
 package com.quiz.program;
 
 import com.quiz.DAO.DatabaseImpl;
+import com.quiz.configuration.Configuration;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

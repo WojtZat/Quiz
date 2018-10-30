@@ -1,15 +1,16 @@
-package com.quiz.program;
+package com.quiz.configuration;
 
 import com.quiz.DAO.DatabaseImpl;
 import com.quiz.DAO.Quiz;
+import com.quiz.program.StageManager;
 import javafx.stage.Stage;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Configuration {
 
-    ClassPathXmlApplicationContext context;
-    Quiz quiz;
-    StageManager stageManager;
+    private ClassPathXmlApplicationContext context;
+    private Quiz quiz;
+    private StageManager stageManager;
 
 
     public Configuration(Stage primarystage){
