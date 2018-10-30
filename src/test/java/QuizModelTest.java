@@ -1,13 +1,15 @@
 import com.quiz.DAO.DatabaseImpl;
 import com.quiz.DAO.MemoryImpl;
+import com.quiz.configuration.springConfig;
 import com.quiz.entity.Question;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class QuizModelTest {
 
-    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(springConfig.class);
     MemoryImpl quiz = context.getBean("memoryImpl", MemoryImpl.class);
     DatabaseImpl quiz2 = context.getBean("databaseImpl", DatabaseImpl.class );
 
