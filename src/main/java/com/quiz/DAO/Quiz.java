@@ -4,12 +4,21 @@ import com.quiz.entity.Question;
 import javafx.collections.ObservableList;
 
 public interface Quiz {
-    public boolean add(String header , String text);
-    public boolean delete(int i);
-    public ObservableList<Question> drawQuestionSet(int numberOfQuestions);
-    public void clear();
-    public boolean delete(Question q);
-    public ObservableList<Question> getList();
-    public boolean add(Question question);
-    public void editQuestion(Question oldQuestion, Question editedQuestion);
+    boolean add(String header, String text);
+
+    boolean delete(int i);
+
+    ObservableList<Question> drawQuestionSet(int numberOfQuestions);
+
+    void clear();
+
+    boolean delete(Question q);
+
+    ObservableList<Question> getList();
+
+    boolean add(Question question);
+
+    void editQuestion(Question oldQuestion, Question editedQuestion);
+
+    // try fixing ObservableList into casual list , then convert into observable for fx usage only
 }
