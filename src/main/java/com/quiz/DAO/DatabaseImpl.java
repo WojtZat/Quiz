@@ -19,7 +19,18 @@ public class DatabaseImpl implements Quiz {
     private static SessionFactory factory;
 
     public DatabaseImpl() {
-        factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Question.class).buildSessionFactory();
+        Configuration config = new Configuration()
+                .addAnnotatedClass(Question.class)
+                .setProperty("connection.driver_class", "org.sqlite.JDBC")
+                .setProperty("connection.url", "jdbc:sqlite::resource:quiz.db")
+                .setProperty("connection.pool_size", "1")
+                .setProperty("javax.persistence.schema-generation.database.action", "create")
+                .setProperty("javax.persistence.schema-generation.create-source", "script")
+                .setProperty("javax.persistence.schema-generation.create-script-source", "import.sql")
+                .setProperty("dialect", "org.hibernate.dialect.SQLiteDialect")
+                .setProperty("show_sql", "true")
+                .setProperty("current_session_context_class", "thread");
+        factory = config.configure().buildSessionFactory();
     }
 
     @Override
