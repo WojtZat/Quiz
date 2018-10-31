@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 @Component
@@ -19,18 +20,24 @@ public class DatabaseImpl implements Quiz {
     private static SessionFactory factory;
 
     public DatabaseImpl() {
-        Configuration config = new Configuration()
+        factory = new Configuration()
+                .addProperties(createProperties())
                 .addAnnotatedClass(Question.class)
-                .setProperty("connection.driver_class", "org.sqlite.JDBC")
-                .setProperty("connection.url", "jdbc:sqlite::resource:quiz.db")
-                .setProperty("connection.pool_size", "1")
-                .setProperty("javax.persistence.schema-generation.database.action", "create")
-                .setProperty("javax.persistence.schema-generation.create-source", "script")
-                .setProperty("javax.persistence.schema-generation.create-script-source", "import.sql")
-                .setProperty("dialect", "org.hibernate.dialect.SQLiteDialect")
-                .setProperty("show_sql", "true")
-                .setProperty("current_session_context_class", "thread");
-        factory = config.configure().buildSessionFactory();
+                .buildSessionFactory();
+    }
+
+    private static Properties createProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.connection.driver_class", "org.sqlite.JDBC");
+        properties.setProperty("hibernate.connection.url", "jdbc:sqlite::resource:quiz.db");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLiteDialect");
+        properties.setProperty("hibernate.connection.pool_size", "1");
+        properties.setProperty("javax.persistence.schema-generation.database.action", "create");
+        properties.setProperty("javax.persistence.schema-generation.create-source", "script");
+        properties.setProperty("javax.persistence.schema-generation.create-script-source", "import.sql");
+        properties.setProperty("show_sql", "true");
+        properties.setProperty("hibernate.current_session_context_class", "thread");
+        return properties;
     }
 
     @Override
