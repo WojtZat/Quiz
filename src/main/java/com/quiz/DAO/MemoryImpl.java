@@ -3,6 +3,7 @@ package com.quiz.DAO;
 import com.quiz.entity.Question;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,11 @@ public class MemoryImpl implements Quiz {
 
     private ObservableList<Question> questionList;
 
-    public MemoryImpl() {
-        this.questionList = FXCollections.observableArrayList();
+    @Autowired
+    public MemoryImpl(ObservableList<Question> questionList) {
+        this.questionList = questionList;
     }
+
 
     @Override
     public boolean add(String header, String text) {
