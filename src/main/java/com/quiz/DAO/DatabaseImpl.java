@@ -6,39 +6,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
-import java.util.Properties;
 import java.util.Random;
 
-@Component
+@Repository
 @Scope("singleton")
 public class DatabaseImpl implements Quiz {
 
-    private static SessionFactory factory;
-
-    public DatabaseImpl() {
-        factory = new Configuration()
-                .addProperties(createProperties())
-                .addAnnotatedClass(Question.class)
-                .buildSessionFactory();
-    }
-
-    private static Properties createProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.connection.driver_class", "org.sqlite.JDBC");
-        properties.setProperty("hibernate.connection.url", "jdbc:sqlite::resource:quiz.db");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLiteDialect");
-        properties.setProperty("hibernate.connection.pool_size", "1");
-        properties.setProperty("javax.persistence.schema-generation.database.action", "create");
-        properties.setProperty("javax.persistence.schema-generation.create-source", "script");
-        properties.setProperty("javax.persistence.schema-generation.create-script-source", "import.sql");
-        properties.setProperty("show_sql", "true");
-        properties.setProperty("hibernate.current_session_context_class", "thread");
-        return properties;
-    }
+    @Autowired
+    private SessionFactory factory;
 
     @Override
     public boolean add(String title, String text) {
@@ -158,7 +138,7 @@ public class DatabaseImpl implements Quiz {
         session.close();
     }
 
-    public static  void close(){
+    public void close() {
         factory.close();
     }
 

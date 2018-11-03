@@ -11,12 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class QuizModelTest {
 
-//    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(springConfig.class);
+    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(springConfig.class);
 
-//    private Quiz quiz  = context.getBean("memoryImpl",MemoryImpl.class);
-
-    //    private Quiz quiz = context.getBean("databaseImpl", DatabaseImpl.class);
-    private Quiz quiz = new DatabaseImpl();
+    //        private Quiz quiz  = context.getBean("memoryImpl",MemoryImpl.class);
+    private Quiz quiz = context.getBean("databaseImpl", DatabaseImpl.class);
 
 
     @Test
@@ -90,14 +88,14 @@ public class QuizModelTest {
         quiz.add("Title3", "Question3");
         quiz.add("Title4", "Question4");
         quiz.add("Title5", "Question5");
-//        if (quiz.getClass().equals(DatabaseImpl.class)) {
-//            DatabaseImpl quiz2 = context.getBean("databaseImpl", DatabaseImpl.class);
-//            Assert.assertEquals(5, quiz2.getList().size());
-//        }
-//        if (quiz.getClass().equals(MemoryImpl.class)) {
-//            MemoryImpl quiz2 = context.getBean("memoryImpl", MemoryImpl.class);
-//            Assert.assertEquals(5, quiz2.getList().size());
-//        }
+        if (quiz.getClass().equals(DatabaseImpl.class)) {
+            DatabaseImpl quiz2 = context.getBean("databaseImpl", DatabaseImpl.class);
+            Assert.assertEquals(5, quiz2.getList().size());
+        }
+        if (quiz.getClass().equals(MemoryImpl.class)) {
+            MemoryImpl quiz2 = context.getBean("memoryImpl", MemoryImpl.class);
+            Assert.assertEquals(5, quiz2.getList().size());
+        }
         quiz.clear();
     }
 

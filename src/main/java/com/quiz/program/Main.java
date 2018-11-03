@@ -21,7 +21,9 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         super.stop();
-        DatabaseImpl.close();
+
+        //find another way to close the database
+//        DatabaseImpl.close();
     }
 
 
