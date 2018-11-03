@@ -17,6 +17,9 @@ import java.util.Random;
 @Scope("singleton")
 public class DatabaseImpl implements Quiz {
 
+    public void setFactory(SessionFactory factory) {
+        this.factory = factory;
+    }
     @Autowired
     private SessionFactory factory;
 

@@ -1,4 +1,4 @@
-package com.quiz.program;
+package com.quiz.FXManager;
 
 import com.quiz.FXController.AddFrameController;
 import com.quiz.FXController.EditFrameController;
@@ -24,7 +24,6 @@ public class StageManager {
     public final Stage primaryStage;
     private final FXMLLoader FXMLLoader;
     Quiz quiz;
-
 
     public void setEditedQestion(Question editedQestion) {
         this.editedQestion = editedQestion;

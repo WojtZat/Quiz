@@ -1,6 +1,6 @@
 package com.quiz.FXController;
 
-import com.quiz.program.StageManager;
+import com.quiz.FXManager.StageManager;
 import com.quiz.entity.Question;
 import com.quiz.DAO.Quiz;
 import javafx.beans.binding.Bindings;

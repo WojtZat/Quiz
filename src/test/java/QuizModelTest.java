@@ -5,6 +5,7 @@ import com.quiz.configuration.springConfig;
 import com.quiz.entity.Question;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,8 @@ public class QuizModelTest {
 
     private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(springConfig.class);
 
-    //        private Quiz quiz  = context.getBean("memoryImpl",MemoryImpl.class);
-    private Quiz quiz = context.getBean("databaseImpl", DatabaseImpl.class);
+    //    private MemoryImpl quiz = context.getBean("memoryImpl",MemoryImpl.class);
+    public Quiz quiz = context.getBean("databaseImpl", DatabaseImpl.class);
 
 
     @Test

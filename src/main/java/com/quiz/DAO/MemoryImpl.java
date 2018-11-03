@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.Random;
@@ -14,7 +13,7 @@ import java.util.Random;
 @Scope("singleton")
 public class MemoryImpl implements Quiz {
 
-    private ObservableList<Question> questionList;
+    private final ObservableList<Question> questionList;
 
     @Autowired
     public MemoryImpl(ObservableList<Question> questionList) {
