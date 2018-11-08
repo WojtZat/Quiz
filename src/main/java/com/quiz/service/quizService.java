@@ -1,18 +1,24 @@
 package com.quiz.service;
 
-import com.quiz.DAO.Quiz;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import com.quiz.entity.Question;
+import javafx.collections.ObservableList;
 
 
-@Service
-public class quizService {
+//temporary quiz functionality
+public interface quizService {
+    boolean add(String header, String text);
 
-    @Autowired
-    @Qualifier("memoryQuiz")
-    public Quiz quiz;
+    boolean delete(int i);
 
-    {
-    }
+    ObservableList<Question> drawQuestionSet(int numberOfQuestions);
+
+    void clear();
+
+    boolean delete(Question q);
+
+    ObservableList<Question> getList();
+
+    boolean add(Question question);
+
+    void editQuestion(Question oldQuestion, Question editedQuestion);
 }

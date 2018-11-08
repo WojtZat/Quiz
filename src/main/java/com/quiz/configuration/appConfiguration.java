@@ -10,7 +10,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Component;
 
 //@Component
-public class Configuration {
+public class appConfiguration {
 
     private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(springConfig.class);
 
@@ -21,7 +21,7 @@ public class Configuration {
     private StageManager stageManager;
 
 
-    public Configuration(Stage primarystage){
+    public appConfiguration(Stage primarystage) {
 //        quiz = context.getBean("memoryImpl", MemoryImpl.class);
         quiz = context.getBean("databaseImpl", DatabaseImpl.class);
         stageManager = new StageManager(primarystage , quiz);
