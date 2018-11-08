@@ -73,9 +73,9 @@ public class MemoryImpl implements Quiz {
     @Override
     // add tests
     public boolean delete(Question q) {
-        if(!this.questionList.contains(q))
+        if (!this.questionList.contains(q))
             return false;
-        else{
+        else {
             this.questionList.remove(q);
             return true;
         }

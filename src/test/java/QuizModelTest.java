@@ -5,22 +5,31 @@ import com.quiz.configuration.springConfig;
 import com.quiz.entity.Question;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @Component
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {springConfig.class})
 public class QuizModelTest {
 
-    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(springConfig.class);
+//    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(springConfig.class);
 
     //    private MemoryImpl quiz = context.getBean("memoryImpl",MemoryImpl.class);
-    public Quiz quiz = context.getBean("databaseImpl", DatabaseImpl.class);
+//    public Quiz quiz = context.getBean("databaseImpl", DatabaseImpl.class);
+    @Autowired
+//    @Qualifier("memoryQuiz")
+    @Qualifier("databaseQuiz")
+    public Quiz quiz;
 
 
     @Test
     public void addTest() {
-
         quiz.clear();
         quiz.add("Title1", "Question1");
         quiz.add("Title2", "Question2");
@@ -75,30 +84,11 @@ public class QuizModelTest {
         Assert.assertEquals(2, quiz.drawQuestionSet(2).size());
         Assert.assertEquals(3, quiz.drawQuestionSet(3).size());
         Assert.assertEquals(4, quiz.drawQuestionSet(4).size());
-        Assert.assertEquals(5, quiz.drawQuestionSet(5).size());
         quiz.delete(4);
         Assert.assertEquals(3, quiz.drawQuestionSet(3).size());
         Assert.assertEquals(0, quiz.drawQuestionSet(5).size());
     }
 
-    @Test
-    public void singletonTest() {
-        quiz.clear();
-        quiz.add("Title1", "Question1");
-        quiz.add("Title2", "Question2");
-        quiz.add("Title3", "Question3");
-        quiz.add("Title4", "Question4");
-        quiz.add("Title5", "Question5");
-        if (quiz.getClass().equals(DatabaseImpl.class)) {
-            DatabaseImpl quiz2 = context.getBean("databaseImpl", DatabaseImpl.class);
-            Assert.assertEquals(5, quiz2.getList().size());
-        }
-        if (quiz.getClass().equals(MemoryImpl.class)) {
-            MemoryImpl quiz2 = context.getBean("memoryImpl", MemoryImpl.class);
-            Assert.assertEquals(5, quiz2.getList().size());
-        }
-        quiz.clear();
-    }
 
     @Test
     public void editTest() {

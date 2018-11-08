@@ -7,6 +7,7 @@ import com.quiz.entity.Question;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -28,11 +29,13 @@ public class springConfig {
     private Environment env;
 
     @Bean
+    @Qualifier("databaseQuiz")
     public DatabaseImpl databaseQuiz() {
         return new DatabaseImpl();
     }
 
     @Bean
+    @Qualifier("memoryQuiz")
     public MemoryImpl memoryQuiz() {
         return new MemoryImpl(questionList());
     }
