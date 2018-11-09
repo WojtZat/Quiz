@@ -1,6 +1,6 @@
 package com.quiz.program;
 
-import com.quiz.configuration.appConfiguration;
+import com.quiz.configuration.AppConfiguration;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -8,7 +8,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        appConfiguration config = new appConfiguration(primaryStage);
+        AppConfiguration config = new AppConfiguration(primaryStage);
         config.loadMainFrame();
     }
 

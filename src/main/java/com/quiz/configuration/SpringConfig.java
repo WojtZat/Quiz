@@ -6,6 +6,7 @@ import com.quiz.DAO.MemoryImpl;
 import com.quiz.entity.Question;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 import javax.sql.DataSource;
@@ -22,9 +25,14 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan("com.quiz")
+@EnableTransactionManagement
 @PropertySource({"classpath:persistence.properties"})
-public class springConfig {
+public class SpringConfig {
 
+    //    @Bean
+//    public AppConfiguration appConfiguration(){
+//        return new AppConfiguration();
+//    }
     @Autowired
     private Environment env;
 
@@ -90,5 +98,16 @@ public class springConfig {
         sessionFactory.setHibernateProperties(getHibernateProperties());
 
         return sessionFactory;
+    }
+
+    @Bean
+    @Autowired
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+
+        // setup transaction manager based on session factory
+        HibernateTransactionManager txManager = new HibernateTransactionManager();
+        txManager.setSessionFactory(sessionFactory);
+
+        return txManager;
     }
 }

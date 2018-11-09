@@ -1,24 +1,23 @@
 import com.quiz.DAO.DatabaseImpl;
 import com.quiz.DAO.MemoryImpl;
 import com.quiz.DAO.Quiz;
-import com.quiz.configuration.springConfig;
+import com.quiz.configuration.SpringConfig;
 import com.quiz.entity.Question;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @Component
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {springConfig.class})
+@ContextConfiguration(classes = {SpringConfig.class})
 public class QuizModelTest {
 
-//    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(springConfig.class);
+//    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
 
     //    private MemoryImpl quiz = context.getBean("memoryImpl",MemoryImpl.class);
 //    public Quiz quiz = context.getBean("databaseImpl", DatabaseImpl.class);
