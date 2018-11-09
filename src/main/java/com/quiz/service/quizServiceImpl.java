@@ -7,53 +7,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class quizServiceImpl implements quizService {
+public class QuizServiceImpl implements QuizService {
 
     @Autowired
-    @Qualifier("memoryQuiz")
+//    @Qualifier("memoryQuiz")
+    @Qualifier("databaseQuiz")
     public Quiz quiz;
-    {
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
+
 
     @Override
     public boolean add(String header, String text) {
-        return false;
+        return quiz.add(header, text);
     }
 
     @Override
     public boolean delete(int i) {
-        return false;
+        return quiz.delete(i);
     }
 
     @Override
     public ObservableList<Question> drawQuestionSet(int numberOfQuestions) {
-        return null;
+        return quiz.drawQuestionSet(numberOfQuestions);
     }
 
     @Override
     public void clear() {
-
+        quiz.clear();
     }
 
     @Override
     public boolean delete(Question q) {
-        return false;
+        return quiz.delete(q);
     }
 
     @Override
     public ObservableList<Question> getList() {
-        return null;
+        return quiz.getList();
     }
 
     @Override
     public boolean add(Question question) {
-        return false;
+        return quiz.add(question);
     }
 
     @Override
     public void editQuestion(Question oldQuestion, Question editedQuestion) {
-
+        quiz.editQuestion(oldQuestion, editedQuestion);
     }
 }

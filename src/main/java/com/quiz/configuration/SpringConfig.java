@@ -4,6 +4,8 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.quiz.DAO.DatabaseImpl;
 import com.quiz.DAO.MemoryImpl;
 import com.quiz.entity.Question;
+import com.quiz.service.QuizService;
+import com.quiz.service.QuizServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.hibernate.SessionFactory;
@@ -33,6 +35,13 @@ public class SpringConfig {
 //    public AppConfiguration appConfiguration(){
 //        return new AppConfiguration();
 //    }
+
+    @Bean
+    @Qualifier("quizService")
+    public QuizServiceImpl quizService() {
+        return new QuizServiceImpl();
+    }
+
     @Autowired
     private Environment env;
 
