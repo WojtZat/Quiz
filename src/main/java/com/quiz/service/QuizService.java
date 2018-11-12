@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 
 
 //temporary quiz functionality
-public interface quizService {
+public interface QuizService {
     boolean add(String header, String text);
 
     boolean delete(int i);

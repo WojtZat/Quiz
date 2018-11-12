@@ -4,6 +4,8 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.quiz.DAO.DatabaseImpl;
 import com.quiz.DAO.MemoryImpl;
 import com.quiz.entity.Question;
+import com.quiz.service.QuizService;
+import com.quiz.service.QuizServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.hibernate.SessionFactory;
@@ -17,6 +19,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.sql.DataSource;
@@ -33,6 +36,14 @@ public class SpringConfig {
 //    public AppConfiguration appConfiguration(){
 //        return new AppConfiguration();
 //    }
+
+    @Bean
+    @Transactional
+    @Qualifier("quizService")
+    public QuizServiceImpl quizService() {
+        return new QuizServiceImpl();
+    }
+
     @Autowired
     private Environment env;
 
@@ -84,7 +95,7 @@ public class SpringConfig {
         properties.setProperty("javax.persistence.schema-generation.database.action", "create");
         properties.setProperty("javax.persistence.schema-generation.create-source", "script");
         properties.setProperty("javax.persistence.schema-generation.create-script-source", "import.sql");
-        properties.setProperty("hibernate.current_session_context_class", "thread");
+//        properties.setProperty("hibernate.current_session_context_class", "thread");
 
         return properties;
     }
