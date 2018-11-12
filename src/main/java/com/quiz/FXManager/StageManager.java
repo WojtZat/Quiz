@@ -6,6 +6,7 @@ import com.quiz.FXController.ListFrameController;
 import com.quiz.FXController.MainFrameController;
 import com.quiz.entity.Question;
 import com.quiz.DAO.Quiz;
+import com.quiz.service.QuizService;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +24,7 @@ public class StageManager {
 
     public final Stage primaryStage;
     private final FXMLLoader FXMLLoader;
-    Quiz quiz;
+    private QuizService quiz;
 
     public void setEditedQestion(Question editedQestion) {
         this.editedQestion = editedQestion;
@@ -32,7 +33,7 @@ public class StageManager {
     private Question editedQestion;
 
 
-    public StageManager(Stage stage, Quiz quizConfig) {
+    public StageManager(Stage stage, QuizService quizConfig) {
         this.quiz = quizConfig;
         this.FXMLLoader = new FXMLLoader();
         this.primaryStage = stage;

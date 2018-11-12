@@ -2,6 +2,7 @@ package com.quiz.FXController;
 
 import com.quiz.entity.Question;
 import com.quiz.DAO.Quiz;
+import com.quiz.service.QuizService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
@@ -12,7 +13,7 @@ import java.util.ResourceBundle;
 
 public class EditFrameController implements Initializable {
 
-    private Quiz quiz;
+    private QuizService quiz;
     private Question question;
 
     @FXML
@@ -22,7 +23,7 @@ public class EditFrameController implements Initializable {
     @FXML
     private TextArea answerEditArea;
 
-    public EditFrameController(Quiz quiz, Question question) {
+    public EditFrameController(QuizService quiz, Question question) {
         this.quiz = quiz;
         this.question = question;
     }

@@ -4,6 +4,7 @@ import com.quiz.FXManager.StageManager;
 import com.quiz.DAO.DatabaseImpl;
 import com.quiz.entity.Question;
 import com.quiz.DAO.Quiz;
+import com.quiz.service.QuizService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -13,13 +14,13 @@ import java.util.ResourceBundle;
 
 public class ListFrameController implements Initializable {
 
-    private Quiz quiz;
+    private QuizService quiz;
     private StageManager manager;
 
     @FXML
     private ListView<Question> listFrameView;
 
-    public ListFrameController(Quiz quiz, StageManager stageManager) {
+    public ListFrameController(QuizService quiz, StageManager stageManager) {
         this.manager = stageManager;
         this.quiz = quiz;
     }
@@ -30,10 +31,11 @@ public class ListFrameController implements Initializable {
             Optional<ButtonType> result = deleteAlert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 if (quiz.delete(listFrameView.getSelectionModel().getSelectedItem())) {
-                    if(quiz.getClass() == DatabaseImpl.class)
+                    if (quiz.getClass() == QuizService.class)
                         listFrameView.setItems(quiz.getList());
                     MainFrameController.numberValue.set(quiz.getList().size());
                     listFrameView.refresh();
+                    refreshList();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Error");
