@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Random;
@@ -17,64 +18,48 @@ import java.util.Random;
 @Scope("singleton")
 public class DatabaseImpl implements Quiz {
 
+    @Autowired
+    private SessionFactory factory;
+
     public void setFactory(SessionFactory factory) {
         this.factory = factory;
     }
-    @Autowired
-    private SessionFactory factory;
 
     @Override
     public boolean add(String title, String text) {
         Session session = factory.getCurrentSession();
         Question question = new Question(title,text);
-        session.beginTransaction();
         session.save(question);
-        session.getTransaction().commit();
-        session.close();
         return true;
     }
 
     @Override
     public boolean delete(int i) {
         Session session = factory.getCurrentSession();
-        session.beginTransaction();
         Question question  = session.get(Question.class, i);
         if((question == null)){
-            session.close();
             return false;
         }
         else{
             session.delete(question);
-            session.getTransaction().commit();
-            session.close();
             return true;
         }
     }
 
     private boolean canDraw(int numberOfQuestion){
         Session session = factory.getCurrentSession();
-        session.beginTransaction();
         List<Question> list = session.createQuery("from question_table").getResultList();
-        session.getTransaction().commit();
-        if(list.size() == 0 || list.size() < numberOfQuestion){
-            session.close();
-            return false;
-        }else
-            session.close();
-            return true;
+        return list.size() != 0 && list.size() >= numberOfQuestion;
     }
 
     private ObservableList<Question> rollArray(int number) {
         ObservableList<Question> questionsArray = FXCollections.observableArrayList();
         Session session = factory.getCurrentSession();
-        session.beginTransaction();
         List<Question> list = session.createQuery("from question_table").getResultList();
-        session.getTransaction().commit();
         int[] values = new Random().ints(0, list.size()).distinct().limit(number).toArray();
         for (int a : values) {
             questionsArray.add(list.get(a));
         }
-        session.close();
         return questionsArray;
     }
 
@@ -90,29 +75,20 @@ public class DatabaseImpl implements Quiz {
     @Override
     public void clear() {
         Session session = factory.getCurrentSession();
-        session.beginTransaction();
         session.createQuery("delete from question_table").executeUpdate();
-        session.getTransaction().commit();
-        session.close();
     }
 
     @Override
     public boolean delete(Question q) {
         Session session = factory.getCurrentSession();
-        session.beginTransaction();
         session.delete(q);
-        session.getTransaction().commit();
-        session.close();
         return true;
     }
 
     @Override
     public ObservableList<Question> getList() {
         Session session= factory.getCurrentSession();
-        session.beginTransaction();
         List<Question> listQuerry = session.createQuery("from question_table").getResultList();
-        session.getTransaction().commit();
-        session.close();
         ObservableList<Question> list = FXCollections.observableList(listQuerry);
         if(list.isEmpty())
             return FXCollections.emptyObservableList();
@@ -122,27 +98,18 @@ public class DatabaseImpl implements Quiz {
     @Override
     public boolean add(Question question) {
         Session session = factory.getCurrentSession();
-        session.beginTransaction();
         session.save(question);
-        session.getTransaction().commit();
-        session.close();
         return true;
     }
 
     @Override
     public void editQuestion(Question oldQuestion, Question newQuestion) {
         Session session = factory.getCurrentSession();
-        session.beginTransaction();
         Question editedQuestion  = session.get(Question.class, oldQuestion.getId());
         editedQuestion.setQuestionText(newQuestion.getQuestionText());
         editedQuestion.setQuestionTitle(newQuestion.getQuestionTitle());
         editedQuestion.setAnswer(newQuestion.getAnswer());
-        session.getTransaction().commit();
-        session.close();
     }
 
-    public void close() {
-        factory.close();
-    }
 
 }

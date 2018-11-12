@@ -3,6 +3,7 @@ package com.quiz.FXController;
 import com.quiz.FXManager.StageManager;
 import com.quiz.entity.Question;
 import com.quiz.DAO.Quiz;
+import com.quiz.service.QuizService;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class MainFrameController implements Initializable {
 
-    private Quiz quiz;
+    private QuizService quiz;
     private ValidationSupport validation;
     private StageManager manager;
 
@@ -38,7 +39,7 @@ public class MainFrameController implements Initializable {
 
     public static IntegerProperty numberValue;
 
-    public MainFrameController(Quiz quiz, StageManager stageManager) {
+    public MainFrameController(QuizService quiz, StageManager stageManager) {
         this.manager = stageManager;
         this.quiz = quiz;
         validation = new ValidationSupport();

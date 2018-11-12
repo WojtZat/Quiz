@@ -19,6 +19,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.sql.DataSource;
@@ -37,6 +38,7 @@ public class SpringConfig {
 //    }
 
     @Bean
+    @Transactional
     @Qualifier("quizService")
     public QuizServiceImpl quizService() {
         return new QuizServiceImpl();
@@ -93,7 +95,7 @@ public class SpringConfig {
         properties.setProperty("javax.persistence.schema-generation.database.action", "create");
         properties.setProperty("javax.persistence.schema-generation.create-source", "script");
         properties.setProperty("javax.persistence.schema-generation.create-script-source", "import.sql");
-        properties.setProperty("hibernate.current_session_context_class", "thread");
+//        properties.setProperty("hibernate.current_session_context_class", "thread");
 
         return properties;
     }

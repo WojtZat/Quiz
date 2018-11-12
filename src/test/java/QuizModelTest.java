@@ -19,11 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = {SpringConfig.class})
 public class QuizModelTest {
 
-//    @Autowired
-//    @Qualifier("memoryQuiz")
-//    @Qualifier("databaseQuiz")
-//    public Quiz quiz;
-
     @Autowired
     @Qualifier("quizService")
     public QuizService quiz;
@@ -109,7 +104,9 @@ public class QuizModelTest {
         if (quiz.getClass().equals(DatabaseImpl.class)) {
             e = quiz.getList().get(0);
         }
-        if (quiz.getClass().equals(QuizServiceImpl.class)) {
+//        if (quiz.getClass().equals(QuizService.class))
+        //temporary fix
+        else {
             e = quiz.getList().get(0);
         }
         for (Question a : quiz.getList())
