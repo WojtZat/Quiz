@@ -1,15 +1,24 @@
 package com.quiz.configuration;
 
-import com.quiz.DAO.DatabaseImpl;
-import com.quiz.DAO.Quiz;
 import com.quiz.FXManager.StageManager;
+<<<<<<< master
+=======
+import com.quiz.service.QuizService;
+>>>>>>> local
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class AppConfiguration {
 
     private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+<<<<<<< master
     private Quiz quiz;
+=======
+
+//    @Autowired
+//    @Qualifier("quizService")
+    private QuizService quiz;
+>>>>>>> local
     private StageManager stageManager;
 
 
