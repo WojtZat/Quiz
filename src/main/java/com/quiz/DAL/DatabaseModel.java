@@ -1,5 +1,4 @@
-package com.quiz.DAO;
-
+package com.quiz.DAL;
 
 import com.quiz.entity.Question;
 import javafx.collections.FXCollections;
@@ -9,14 +8,14 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Random;
 
+// nazwa klasy poprawic
+
 @Repository
 @Scope("singleton")
-public class DatabaseImpl implements Quiz {
+public class DatabaseModel implements Quiz {
 
     @Autowired
     private SessionFactory factory;
@@ -34,6 +33,13 @@ public class DatabaseImpl implements Quiz {
     }
 
     @Override
+    public boolean add(Question question) {
+        Session session = factory.getCurrentSession();
+        session.save(question);
+        return true;
+    }
+
+    @Override
     public boolean delete(int i) {
         Session session = factory.getCurrentSession();
         Question question  = session.get(Question.class, i);
@@ -46,10 +52,11 @@ public class DatabaseImpl implements Quiz {
         }
     }
 
-    private boolean canDraw(int numberOfQuestion){
+    @Override
+    public boolean delete(Question q) {
         Session session = factory.getCurrentSession();
-        List<Question> list = session.createQuery("from question_table").getResultList();
-        return list.size() != 0 && list.size() >= numberOfQuestion;
+        session.delete(q);
+        return true;
     }
 
     private ObservableList<Question> rollArray(int number) {
@@ -72,17 +79,16 @@ public class DatabaseImpl implements Quiz {
         }
     }
 
+    private boolean canDraw(int numberOfQuestion) {
+        Session session = factory.getCurrentSession();
+        List<Question> list = session.createQuery("from question_table").getResultList();
+        return list.size() != 0 && list.size() >= numberOfQuestion;
+    }
+
     @Override
     public void clear() {
         Session session = factory.getCurrentSession();
         session.createQuery("delete from question_table").executeUpdate();
-    }
-
-    @Override
-    public boolean delete(Question q) {
-        Session session = factory.getCurrentSession();
-        session.delete(q);
-        return true;
     }
 
     @Override
@@ -96,18 +102,11 @@ public class DatabaseImpl implements Quiz {
     }
 
     @Override
-    public boolean add(Question question) {
-        Session session = factory.getCurrentSession();
-        session.save(question);
-        return true;
-    }
-
-    @Override
     public void editQuestion(Question oldQuestion, Question newQuestion) {
         Session session = factory.getCurrentSession();
         Question editedQuestion  = session.get(Question.class, oldQuestion.getId());
-        editedQuestion.setQuestionText(newQuestion.getQuestionText());
-        editedQuestion.setQuestionTitle(newQuestion.getQuestionTitle());
+        editedQuestion.setText(newQuestion.getText());
+        editedQuestion.setTitle(newQuestion.getTitle());
         editedQuestion.setAnswer(newQuestion.getAnswer());
     }
 

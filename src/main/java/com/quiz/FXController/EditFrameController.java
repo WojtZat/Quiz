@@ -1,7 +1,6 @@
 package com.quiz.FXController;
 
 import com.quiz.entity.Question;
-import com.quiz.DAO.Quiz;
 import com.quiz.service.QuizService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,8 +45,8 @@ public class EditFrameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        editTitleText.setText(question.getQuestionTitle());
-        editBodyText.setText(question.getQuestionText());
+        editTitleText.setText(question.getTitle());
+        editBodyText.setText(question.getText());
         if (!question.getAnswer().isEmpty())
             answerEditArea.setText(question.getAnswer());
     }

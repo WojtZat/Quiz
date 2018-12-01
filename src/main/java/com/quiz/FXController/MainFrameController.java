@@ -2,7 +2,6 @@ package com.quiz.FXController;
 
 import com.quiz.FXManager.StageManager;
 import com.quiz.entity.Question;
-import com.quiz.DAO.Quiz;
 import com.quiz.service.QuizService;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -16,10 +15,14 @@ import org.controlsfx.validation.Validator;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class MainFrameController implements Initializable {
 
-    private QuizService quiz;
+    public QuizService quiz;
+
     private ValidationSupport validation;
+
+
     private StageManager manager;
 
     @FXML
@@ -44,8 +47,8 @@ public class MainFrameController implements Initializable {
         this.quiz = quiz;
         validation = new ValidationSupport();
         numberValue = new SimpleIntegerProperty(quiz.getList().size());
-        System.out.println(numberValue.toString());
     }
+
 
     @FXML
     public void switchToListScene() {
@@ -68,7 +71,7 @@ public class MainFrameController implements Initializable {
     public void handleListClickView() {
         if (!listView.getItems().isEmpty()) {
             Question question = listView.getSelectionModel().getSelectedItem();
-            mainViewTextArea.setText(question.getQuestionText());
+            mainViewTextArea.setText(question.getText());
             answerAccordion.setDisable(false);
             answerTextArea.setText(question.getAnswer());
             if (listView.getSelectionModel().getSelectedItem().getAnswer().isEmpty() ||

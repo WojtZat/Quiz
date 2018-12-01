@@ -1,10 +1,8 @@
-import com.quiz.DAO.DatabaseImpl;
-import com.quiz.DAO.MemoryImpl;
-import com.quiz.DAO.Quiz;
+import com.quiz.DAL.DatabaseModel;
+import com.quiz.DAL.MemoryModel;
 import com.quiz.configuration.SpringConfig;
 import com.quiz.entity.Question;
 import com.quiz.service.QuizService;
-import com.quiz.service.QuizServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -92,16 +90,16 @@ public class QuizModelTest {
         quiz.add(q);
         Question editedQ = new Question("EditedTitle1", "EditedQuestion2");
         editedQ.setAnswer("editedAnswer!");
-        System.out.print(q.getQuestionText() + "\n");
-        System.out.print(editedQ.getQuestionText() + "\n");
+        System.out.print(q.getText() + "\n");
+        System.out.print(editedQ.getText() + "\n");
         System.out.println("----------------");
         Question e = null;
         quiz.editQuestion(q, editedQ);
-        if (quiz.getClass().equals(MemoryImpl.class)) {
+        if (quiz.getClass().equals(MemoryModel.class)) {
             int i = quiz.getList().indexOf(q);
             e = quiz.getList().get(i);
         }
-        if (quiz.getClass().equals(DatabaseImpl.class)) {
+        if (quiz.getClass().equals(DatabaseModel.class)) {
             e = quiz.getList().get(0);
         }
 //        if (quiz.getClass().equals(QuizService.class))
@@ -110,9 +108,9 @@ public class QuizModelTest {
             e = quiz.getList().get(0);
         }
         for (Question a : quiz.getList())
-            System.out.println(a.getQuestionText() + " " + a.getQuestionTitle() + " " + a.getAnswer() + "\n");
+            System.out.println(a.getText() + " " + a.getTitle() + " " + a.getAnswer() + "\n");
         assert e != null;
-        Assert.assertEquals(e.getQuestionText(), editedQ.getQuestionText());
+        Assert.assertEquals(e.getText(), editedQ.getText());
     }
 
 
