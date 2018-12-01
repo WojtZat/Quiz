@@ -1,4 +1,4 @@
-package com.quiz.DAO;
+package com.quiz.DAL;
 
 import com.quiz.entity.Question;
 import javafx.collections.FXCollections;
@@ -11,15 +11,14 @@ import java.util.Random;
 
 @Repository
 @Scope("singleton")
-public class MemoryImpl implements Quiz {
+public class MemoryModel implements Quiz {
 
     private final ObservableList<Question> questionList;
 
     @Autowired
-    public MemoryImpl(ObservableList<Question> questionList) {
+    public MemoryModel(ObservableList<Question> questionList) {
         this.questionList = questionList;
     }
-
 
     @Override
     public boolean add(String header, String text) {
@@ -34,17 +33,34 @@ public class MemoryImpl implements Quiz {
     }
 
     @Override
-    public boolean delete(int number) {
-        if (number >= this.questionList.size() || number < 0)
+    public boolean add(Question question) {
+        if (question.getText().isEmpty() || question.getTitle().isEmpty())
+            return false;
+        if (!this.questionList.contains(question)) {
+            questionList.add(question);
+            return true;
+        } else
+            return false;
+    }
+
+    @Override
+    public boolean delete(int numberOfQuestion) {
+        if (numberOfQuestion >= this.questionList.size() || numberOfQuestion < 0)
             return false;
         else {
-            this.questionList.remove(number);
+            this.questionList.remove(numberOfQuestion);
             return true;
         }
     }
 
-    private boolean canDraw(int number) {
-        return number > 0 && this.questionList.size() >= number;
+    @Override
+    public boolean delete(Question q) {
+        if (!this.questionList.contains(q))
+            return false;
+        else {
+            this.questionList.remove(q);
+            return true;
+        }
     }
 
     @Override
@@ -54,6 +70,10 @@ public class MemoryImpl implements Quiz {
         } else {
             return rollArray(numberOfQuestions);
         }
+    }
+
+    private boolean canDraw(int number) {
+        return number > 0 && this.questionList.size() >= number;
     }
 
     private ObservableList<Question> rollArray(int number) {
@@ -70,40 +90,17 @@ public class MemoryImpl implements Quiz {
         this.questionList.clear();
     }
 
-    @Override
-    // add tests
-    public boolean delete(Question q) {
-        if (!this.questionList.contains(q))
-            return false;
-        else {
-            this.questionList.remove(q);
-            return true;
-        }
-    }
-
     public ObservableList<Question> getList() {
         return questionList;
-    }
-
-    @Override
-    public boolean add(Question question) {
-        if (question.getQuestionText().isEmpty() || question.getQuestionTitle().isEmpty())
-            return false;
-        if (!this.questionList.contains(question)) {
-            questionList.add(question);
-            return true;
-        } else
-            return false;
     }
 
     @Override
     public void editQuestion(Question oldQuestion, Question editedQuestion) {
         int index = this.questionList.indexOf(oldQuestion);
         Question tempQuestion = this.questionList.get(index);
-        tempQuestion.setQuestionTitle(editedQuestion.getQuestionTitle());
-        tempQuestion.setQuestionText(editedQuestion.getQuestionText());
+        tempQuestion.setTitle(editedQuestion.getTitle());
+        tempQuestion.setText(editedQuestion.getText());
         tempQuestion.setAnswer(editedQuestion.getAnswer());
-
     }
 
 }

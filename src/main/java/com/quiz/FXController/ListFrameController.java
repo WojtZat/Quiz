@@ -1,13 +1,14 @@
 package com.quiz.FXController;
 
 import com.quiz.FXManager.StageManager;
-import com.quiz.DAO.DatabaseImpl;
 import com.quiz.entity.Question;
-import com.quiz.DAO.Quiz;
 import com.quiz.service.QuizService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;

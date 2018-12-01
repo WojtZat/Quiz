@@ -1,4 +1,4 @@
-package com.quiz.DAO;
+package com.quiz.DAL;
 
 import com.quiz.entity.Question;
 import javafx.collections.ObservableList;

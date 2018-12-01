@@ -1,10 +1,9 @@
 package com.quiz.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.quiz.DAO.DatabaseImpl;
-import com.quiz.DAO.MemoryImpl;
+import com.quiz.DAL.DatabaseModel;
+import com.quiz.DAL.MemoryModel;
 import com.quiz.entity.Question;
-import com.quiz.service.QuizService;
 import com.quiz.service.QuizServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +20,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.util.Properties;
@@ -31,11 +29,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource({"classpath:persistence.properties"})
 public class SpringConfig {
-
-    //    @Bean
-//    public AppConfiguration appConfiguration(){
-//        return new AppConfiguration();
-//    }
 
     @Bean
     @Transactional
@@ -49,14 +42,14 @@ public class SpringConfig {
 
     @Bean
     @Qualifier("databaseQuiz")
-    public DatabaseImpl databaseQuiz() {
-        return new DatabaseImpl();
+    public DatabaseModel databaseQuiz() {
+        return new DatabaseModel();
     }
 
     @Bean
     @Qualifier("memoryQuiz")
-    public MemoryImpl memoryQuiz() {
-        return new MemoryImpl(questionList());
+    public MemoryModel memoryQuiz() {
+        return new MemoryModel(questionList());
     }
 
     @Bean
@@ -77,15 +70,12 @@ public class SpringConfig {
         myDataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
         myDataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
         myDataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
-
-
         return myDataSource;
     }
 
     private int getIntProperty(String propName) {
         String propVal = env.getProperty(propName);
-        int intPropVal = Integer.parseInt(propVal);
-        return intPropVal;
+        return Integer.parseInt(propVal);
     }
 
     private Properties getHibernateProperties() {
@@ -96,29 +86,23 @@ public class SpringConfig {
         properties.setProperty("javax.persistence.schema-generation.create-source", "script");
         properties.setProperty("javax.persistence.schema-generation.create-script-source", "import.sql");
 //        properties.setProperty("hibernate.current_session_context_class", "thread");
-
         return properties;
     }
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
-
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(myDataSource());
         sessionFactory.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
         sessionFactory.setHibernateProperties(getHibernateProperties());
-
         return sessionFactory;
     }
 
     @Bean
     @Autowired
     public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-
-        // setup transaction manager based on session factory
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
-
         return txManager;
     }
 }

@@ -5,7 +5,6 @@ import com.quiz.FXController.EditFrameController;
 import com.quiz.FXController.ListFrameController;
 import com.quiz.FXController.MainFrameController;
 import com.quiz.entity.Question;
-import com.quiz.DAO.Quiz;
 import com.quiz.service.QuizService;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -22,16 +21,14 @@ import java.util.Optional;
 
 public class StageManager {
 
-    public final Stage primaryStage;
+    private final Stage primaryStage;
     private final FXMLLoader FXMLLoader;
     private QuizService quiz;
+    private Question editedQestion;
 
     public void setEditedQestion(Question editedQestion) {
         this.editedQestion = editedQestion;
     }
-
-    private Question editedQestion;
-
 
     public StageManager(Stage stage, QuizService quizConfig) {
         this.quiz = quizConfig;
@@ -51,12 +48,12 @@ public class StageManager {
             FXMLLoader.setRoot(null);
             FXMLLoader.setController(null);
             FXMLLoader.setLocation(getClass().getResource(fxmlFilePath));
-            if(fxmlFilePath.matches("/fxml/ListFrame.fxml")){
+            if (fxmlFilePath.matches("/fxml/ListFrame.fxml")) {
                 FXMLLoader.setControllerFactory(c -> {
                     return new ListFrameController(quiz, this);
                 });
             }
-            if(fxmlFilePath.matches("/fxml/MainFrame.fxml")) {
+            if (fxmlFilePath.matches("/fxml/MainFrame.fxml")) {
                 FXMLLoader.setControllerFactory(c -> {
                     return new MainFrameController(quiz, this);
                 });
@@ -107,12 +104,12 @@ public class StageManager {
         FXMLLoader.setRoot(null);
         FXMLLoader.setController(null);
         FXMLLoader.setLocation(getClass().getResource(view));
-        if(view.matches("/fxml/AddFrame.fxml")) {
+        if (view.matches("/fxml/AddFrame.fxml")) {
             FXMLLoader.setControllerFactory(c -> {
                 return new AddFrameController(quiz);
             });
         }
-        if(view.matches("/fxml/EditFrame.fxml"))
+        if (view.matches("/fxml/EditFrame.fxml"))
             FXMLLoader.setControllerFactory(c -> {
                 return new EditFrameController(quiz, editedQestion);
             });
