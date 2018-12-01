@@ -1,6 +1,6 @@
 package com.quiz.service;
 
-import com.quiz.DAO.Quiz;
+import com.quiz.DAL.Quiz;
 import com.quiz.entity.Question;
 import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,10 @@ package com.quiz.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -18,16 +21,15 @@ public class Question implements Serializable {
         return id;
     }
 
-    public Question(String questionTitle, String questionText) {
-        this.questionTitle = questionTitle;
-        this.questionText = questionText;
+    public Question(String title, String text) {
+        this.title = title;
+        this.text = text;
         this.answer = "";
     }
 
     public Question() {
 
     }
-
 
     @Column(name = "answer", nullable = false)
     private String answer;
@@ -41,25 +43,25 @@ public class Question implements Serializable {
     }
 
     @Column(name = "title", nullable = false, unique = true)
-    private String questionTitle;
+    private String title;
 
-    public String getQuestionTitle() {
-        return questionTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setQuestionTitle(String questionTitle) {
-        this.questionTitle = questionTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Column(name = "text", nullable = false)
-    private String questionText;
+    private String text;
 
-    public String getQuestionText() {
-        return questionText;
+    public String getText() {
+        return text;
     }
 
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
@@ -68,19 +70,19 @@ public class Question implements Serializable {
         if (!(o instanceof Question)) return false;
         Question question = (Question) o;
         return id == question.id &&
-                Objects.equals(questionTitle, question.questionTitle) &&
-                Objects.equals(questionText, question.questionText) &&
+                Objects.equals(title, question.title) &&
+                Objects.equals(text, question.text) &&
                 Objects.equals(answer, question.answer);
     }
 
     @Override
     public String toString() {
-        return questionTitle;
+        return title;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, questionTitle, questionText, answer);
+        return Objects.hash(id, title, text, answer);
     }
 
 
